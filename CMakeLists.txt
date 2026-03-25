@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.25)
 
 project(fluid-sim LANGUAGES CXX)
 
@@ -15,26 +15,21 @@ list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}/build/${CMAKE_BUILD_TYPE}/gen
 include(FetchContent)
 
 FetchContent_Declare(
-	glfw
-	GIT_REPOSITORY https://github.com/glfw/glfw.git
-	GIT_TAG        master
+	gl-renderer
+	GIT_REPOSITORY https://github.com/anazli/gl-renderer.git
+	GIT_TAG        main
 )
-FetchContent_MakeAvailable(glfw)
+FetchContent_MakeAvailable(gl-renderer)
 
-find_package(OpenGL REQUIRED)
-find_package(OpenGL REQUIRED)
+add_executable(${PROJECT_NAME}
+	src/main.cpp
+	src/fluid_simulation.h
+	src/fluid_simulation.cpp
+)
 
-set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
-
-add_executable(${PROJECT_NAME} src/main.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE
-    glfw
-    glad
-    OpenGL::GL
+    gl-renderer
 )

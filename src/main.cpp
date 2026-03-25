@@ -1,5 +1,6 @@
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
-#include <glad/glad.h>
+#include "fluid_simulation.h"
 
-int main() { return 0; }
+int main() {
+  FluidSimulation f;
+  return 0;
+}
